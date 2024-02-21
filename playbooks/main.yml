@@ -1,0 +1,35 @@
+---
+- name: Set up yubikey after fresh install.
+  hosts: localhost
+  connection: local
+
+  tasks:
+    - name: Ensure public key is present.
+      ansible.builtin.command:
+        cmd: gpg --recv-keys {{ public_key }}
+      register: recv_key_out
+      changed_when: '"not changed" not in recv_key_out.stderr'
+
+    - name: Ensure gpg-agent.conf template is installed.
+      ansible.builtin.template:
+        src: ./templates/gpg-agent.conf.j2
+        dest: ~/.gnupg/gpg-agent.conf
+        mode: "0644"
+
+    - name: Ensure SSH_TTY_SOCK is configured via gpgconf.
+      ansible.builtin.blockinfile:
+        path: ~/.bashrc
+        prepend_newline: true
+        block: |
+          if [[ -z $SSH_CONNECTION ]]; then
+            export GPG_TTY="$(tty)"
+            export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+            gpgconf --launch gpg-agent
+          fi
+
+    - name: Ensure pcscd.service is started and enabled.
+      become: true
+      ansible.builtin.service:
+        name: pcscd
+        state: started
+        enabled: true
