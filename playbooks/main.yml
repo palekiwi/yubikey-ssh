@@ -57,7 +57,14 @@
             path: /usr/bin/tailscale
           register: stat_tailscale
 
-        - name: Ensure tailscale is installed.
-          community.general.rpm_ostree_pkg:
-            name: tailscale
-            state: present
+        - name: Install tailscale.
+          when: not stat_tailscale.stat.exists
+          block:
+            - name: Ensure tailscale is installed.
+              community.general.rpm_ostree_pkg:
+                name: tailscale
+                state: present
+
+            - name: Print a reminder to reboot.
+              ansible.builtin.debug:
+                msg: "Reboot to apply ostree changes: `sudo systemctl reboot`"
