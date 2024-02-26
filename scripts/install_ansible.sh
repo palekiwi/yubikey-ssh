@@ -1,6 +1,6 @@
 #!/bin/bash
 
-dir=/tmp/venv/ansible
+dir=~/.venv/ansible
 
 if [ ! -d $dir ]; then
     echo "Creating venv dir..."
