@@ -16,6 +16,7 @@ source $dir/bin/activate
 echo "Installing ansible..."
 pip install ansible
 
-echo -e "\nDONE\n"
-echo "To activate venv, run:"
-echo "source ${dir}/bin/activate"
+echo "\nDONE\n"
+
+echo "To run the main playbook:"
+echo "source ${dir}/bin/activate && ansible-playbook playbooks/main.yml -K -e hostname=<hostname>"
