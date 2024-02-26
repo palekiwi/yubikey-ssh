@@ -1,29 +1,19 @@
 ---
-- name: Set up tailscale.
+- name: Log into tailscale.
   hosts: localhost
   become: true
   connection: local
 
+  vars_files:
+    - vars/tailscale.yml
+
   handlers:
     - name: Log into tailscale
       ansible.builtin.command:
-        cmd: >
-          tailscale up
-          --auth-key={{ tailscale_auth_key }}
-          --hostname={{ hostname }}
+        cmd: tailscale up --auth-key={{ tailscale_auth_key }}
       changed_when: true
 
   tasks:
-    - name: Add tailscale repository.
-      ansible.builtin.yum_repository:
-        name: tailscale
-        description: Tailscale stable
-        baseurl: https://pkgs.tailscale.com/stable/fedora/$basearch
-        gpgkey: https://pkgs.tailscale.com/stable/fedora/repo.gpg
-        gpgcheck: false
-        repo_gpgcheck: true
-        enabled: true
-
     - name: Check if tailscale is already installed.
       ansible.builtin.stat:
         path: /usr/bin/tailscale
