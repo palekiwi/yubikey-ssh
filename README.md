@@ -4,22 +4,11 @@ Required variables:
 
     hostname: string
 
-1. Ensure python is installed.
+1. Run script to install ansible:
+    `sh ./scripts/install_ansible.sh`
 
-2. Create a directory for python virtual env, eg:
-    `mkdir -p ~/.venv/ansible`
+2. Run playbooks/main.yml
+    `ansible-playbook playbooks/main.yml -e "hostname=<hostname>" --ask-become-pass --ask-vault-pass`
 
-3. Create a virtual env for ansible:
-    `python -m venv ~/.venv/ansible`
-
-4. Activate virtual env:
-    `source ~/.venv/ansible/bin/activate`
-
-5. Install ansible:
-    `pip install ansible`
-
-6. Run playbooks/main.yml
-    `ansible-playbook playbooks/main.yml -e "hostname=<hostname>"`
-
-7. Make sure to trust the key:
+3. Make sure to trust the key:
     `gpg --edit-key <key>`

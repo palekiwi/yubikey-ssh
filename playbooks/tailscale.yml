@@ -1,6 +1,7 @@
 ---
 - name: Set up tailscale.
   hosts: localhost
+  become: true
   connection: local
 
   handlers:
