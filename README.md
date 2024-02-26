@@ -1,5 +1,9 @@
 # Setup Yubikey for SSH aunthentication
 
+Required variables:
+
+    hostname: string
+
 1. Ensure python is installed.
 
 2. Create a directory for python virtual env, eg:
@@ -15,7 +19,7 @@
     `pip install ansible`
 
 6. Run playbooks/main.yml
-    `ansible-playbook playbooks/main.yml`
+    `ansible-playbook playbooks/main.yml -e "hostname=<hostname>"`
 
 7. Make sure to trust the key:
     `gpg --edit-key <key>`

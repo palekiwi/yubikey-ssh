@@ -1,0 +1,13 @@
+---
+- name: Test
+  hosts: localhost
+  connection: local
+
+  tasks:
+    - name: Debug
+      ansible.builtin.debug:
+        var: tailscale_auth_key
+
+    - name: Debug
+      ansible.builtin.debug:
+        var: hostname

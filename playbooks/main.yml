@@ -4,6 +4,11 @@
   connection: local
 
   tasks:
+    - name: Ensure hostname is set according to inventory.
+      ansible.builtin.hostname:
+        name: "{{ hostname }}"
+        use: systemd
+
     - name: Ensure public key is present.
       ansible.builtin.command:
         cmd: gpg --recv-keys {{ public_key }}
