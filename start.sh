@@ -19,4 +19,4 @@ pip install ansible
 echo "\nDONE\n"
 
 echo "To run the main playbook:"
-echo "source ${dir}/bin/activate && ansible-playbook playbooks/main.yml -K -e hostname=<hostname>"
+echo "source ${dir}/bin/activate && ansible-playbook playbooks/main.yml -K"
